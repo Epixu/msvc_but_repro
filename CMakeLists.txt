@@ -3,7 +3,11 @@ project(bug_repro)
 add_executable(repro Main.cpp)
 
 target_compile_features(repro PRIVATE cxx_std_20)
-target_compile_options(repro PRIVATE /utf-8 /W3 /bigobj /EHsc /arch:AVX)
+if(MSVC)
+    target_compile_options(repro INTERFACE /utf-8 /W3 /bigobj /EHsc /arch:AVX)
+else()
+    target_compile_options(repro INTERFACE -Wall -Wextra)
+endif()
 
 include(FetchContent)
 message(STATUS "Fetching Catch2...")
