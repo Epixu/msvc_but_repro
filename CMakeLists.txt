@@ -3,6 +3,11 @@ project(bug_repro)
 add_executable(repro Main.cpp)
 
 target_compile_features(repro PRIVATE cxx_std_20)
+if (MSVC)
+    target_compile_options(repro PRIVATE /arch:AVX)
+else()
+    target_compile_options(repro PRIVATE -mavx)
+endif()
 
 include(FetchContent)
 message(STATUS "Fetching Catch2...")
